@@ -1,0 +1,13 @@
+services:
+  mongodb:
+    profiles:
+      - dev
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_PASSWORD
+      - 'MONGO_INITDB_ROOT_USERNAME'
+    ports:
+      - 27019:27017
+    volumes:
+      - /$HOME/gameOfLifeDB/run_docker/docker.sock:/var/run/docker.sock
