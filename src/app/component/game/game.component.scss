@@ -1,0 +1,80 @@
+$primary-color: #2a4e97;
+$background-color: #7e7e7e;
+$grid-cell-size: 45px;
+
+
+.c-style {
+  position: relative;
+  background: #fefcfc;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 80vw;
+  height: 600px;
+  user-select: none;
+  overflow: auto;
+}
+
+
+.game-of-life {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  grid-gap: 1px;
+}
+
+.game-of-life > div {
+  border: 1px solid black;
+  width: 10px;
+  height: 10px;
+}
+
+.footer {
+  background: #646464;
+  height: 75px;
+}
+
+
+.buttonClass {
+  margin: 10px;
+  height: 50px;
+  text-align: start;
+  background-color: $primary-color;
+}
+
+.header {
+  background-color: #3663a8;
+}
+
+.grid-container {
+  display: grid;
+  grid-gap: 0;
+}
+
+.grid-row {
+  display: flex;
+}
+
+.grid-cell {
+  width: $grid-cell-size;
+  height: $grid-cell-size;
+  border: 1px solid #3663a8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &.selected {
+    background-color: #fefcfc;
+  }
+}
+.myModal{
+  background: #3d3c3c;
+}
+
+.circle {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
