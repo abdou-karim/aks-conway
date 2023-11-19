@@ -21,7 +21,8 @@ export class GameComponent implements OnInit, OnDestroy {
   gameDatas?: GameModel[] = [];
   themes: string[] = [];
   loadMotif: boolean = false;
-  speed: number = 200;
+  enableToSave: boolean = false;
+  speed: number = 100;
   gameSubscription: Subscription | undefined;
   gameInitialise: Subscription | undefined;
   selectedCells: { row: number; col: number }[] = [];
@@ -30,6 +31,7 @@ export class GameComponent implements OnInit, OnDestroy {
   gridSize: number = 50;
 
   ngOnInit(): void {
+    this.loadMotif = true;
     this.loadData(this.gridSize);
     this.loadGame()
   }
@@ -85,12 +87,13 @@ export class GameComponent implements OnInit, OnDestroy {
       // La cellule est déjà sélectionnée, la déselectionner
       this.selectedCells.splice(index, 1);
       this.updateGrid({row: row, col: col, alive: false})
+       this.selectedCells.length >= 1 ? this.loadMotif = false: this.loadMotif = true;
     } else {
       this.updateGrid({row: row, col: col, alive: true})
       // La cellule n'est pas sélectionnée, l'ajouter à la liste des cellules sélectionnées
       this.selectedCells.push({row, col});
+      this.loadMotif = false;
     }
-
   }
 
   isSelected(row: number, col: number): boolean {
@@ -107,17 +110,17 @@ export class GameComponent implements OnInit, OnDestroy {
       this.updateGeneration()
     })
     this.isGamePaused = false;
+    this.enableToSave = false;
   }
 
   onClickStop() {
     this.stopGame();
     this.isGamePaused = true;
+    this.enableToSave = true;
   }
 
   onSpeedChange(): void {
-    if (this.gameSubscription) {
-      this.onClickStart();
-    }
+    console.log(this.speed)
   }
 
   clearGrid() {
@@ -125,7 +128,7 @@ export class GameComponent implements OnInit, OnDestroy {
     this.selectedCells = [];
     this.loadData(this.gridSize);
     this.stopGame();
-    this.loadMotif = false;
+    this.loadMotif = true;
   }
 
   private stopGame() {
@@ -185,7 +188,7 @@ export class GameComponent implements OnInit, OnDestroy {
         (data) => {
           const oldGrid = this.gameData?.grid || [];
           const newGrid = data.grid || [];
-          this.updateCellInGrid(oldGrid, newGrid)
+         this.updateCellInGrid(oldGrid,newGrid)
           this.gameData = data;
           this.loadMotif = true;
         },
